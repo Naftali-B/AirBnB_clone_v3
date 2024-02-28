@@ -73,7 +73,8 @@ def update_city(city_id):
     if city is None:
         abort(404)
     if not request.is_json:
-        abort(400, description="Not a JSON")
+        # abort(400, description="Not a JSON")
+        return (jsonify({'error': 'Not a JSON'}), 400)
     data = request.get_json()
     for key, value in data.items():
         if key not in ['id', 'state_id', 'created_at', 'updated_at']:
