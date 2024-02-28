@@ -54,10 +54,10 @@ def create_city(state_id):
     if state is None:
         abort(404)
     if not request.is_json:
-        abort(400, description="Not a JSON")
+        return (jsonify({'error': 'Not a JSON'}), 400)
     data = request.get_json()
     if 'name' not in data:
-        abort(400, description="Missing name")
+        return (jsonify({'error': 'Missing name'}), 400)
     data['state_id'] = state_id
     city = City(**data)
     city.save()
@@ -73,7 +73,6 @@ def update_city(city_id):
     if city is None:
         abort(404)
     if not request.is_json:
-        # abort(400, description="Not a JSON")
         return (jsonify({'error': 'Not a JSON'}), 400)
     data = request.get_json()
     for key, value in data.items():
